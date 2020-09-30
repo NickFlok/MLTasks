@@ -19,6 +19,7 @@ def drawGraph(data):
     # Maak gebruik van pytplot.scatter om dit voor elkaar te krijgen.
 
     #YOUR CODE HERE
+
     plt.scatter(data[:,0], data[:,1])
     plt.show()
 
@@ -43,10 +44,13 @@ def computeCost(X, y, theta):
     #    3. bereken het verschil tussen deze voorspelling en de werkelijke waarde
     #    4. kwadrateer dit verschil
     #    5. tal al deze kwadraten bij elkaar op en deel dit door twee keer het aantal datapunten
+    def h(theta0, theta1, x):
+        return theta0 + theta1 * x
 
-    J = 0
+    def cost_function(m, hf, y, x):
+        return (1/(2 * m)) * sum((hf(*theta, x[i][1]) - y[i]) ** 2 for i in range(y.size))[0]
 
-    # YOUR CODE HERE
+    J = cost_function(y.size, h, y, X)
 
     return J
 
