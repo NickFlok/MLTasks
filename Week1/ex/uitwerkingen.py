@@ -3,7 +3,6 @@ import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 from matplotlib import cm
 import matplotlib.mlab as mlab
-
 def drawGraph(data):
     #OPGAVE 1
     # Maak een scatter-plot van de data die als parameter aan deze functie wordt meegegeven. Deze data
@@ -20,7 +19,8 @@ def drawGraph(data):
     # Maak gebruik van pytplot.scatter om dit voor elkaar te krijgen.
 
     #YOUR CODE HERE
-    pass
+    plt.scatter(data[:,0], data[:,1])
+    plt.show()
 
 
 
