@@ -48,8 +48,7 @@ def computeCost(X, y, theta):
         return theta0 + theta1 * x
 
     def cost_function(m, hf, y, x):
-        return (1/(2 * m)) * sum((hf(*theta, x[i][1]) - y[i]) ** 2 for i in range(y.size))[0]
-
+        return (1/(2 * m)) * np.sum([(hf(*theta[:,0], x[i][1]) - y[i]) ** 2 for i in range(y.size)])
     J = cost_function(y.size, h, y, X)
 
     return J
