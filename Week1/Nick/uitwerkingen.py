@@ -4,7 +4,7 @@ from mpl_toolkits.mplot3d import Axes3D
 from matplotlib import cm
 import matplotlib.mlab as mlab
 
-def drawGraph(data):
+def drawGraph(data_list):
     #OPGAVE 1
     # Maak een scatter-plot van de data die als parameter aan deze functie wordt meegegeven. Deze data
     # is een twee-dimensionale matrix met in de eerste kolom de grootte van de steden, in de tweede
@@ -20,11 +20,16 @@ def drawGraph(data):
     # Maak gebruik van pytplot.scatter om dit voor elkaar te krijgen.
 
     #YOUR CODE HERE
-    pass
+    x = []
+    y = []
+    for data in data_list:
+        x.append(data[0])
+        y.append(data[1])
+    plt.scatter(x, y)
+    plt.show()
 
 
-
-def computeCost(X, y, theta):
+def computeCost(X, y, theta, m):
     #OPGAVE 2
     # Deze methode berekent de kosten van de huidige waarden van theta, dat wil zeggen de mate waarin de
     # voorspelling (gegeven de specifieke waarde van theta) correspondeert met de werkelijke waarde (die
@@ -44,12 +49,18 @@ def computeCost(X, y, theta):
     #    4. kwadrateer dit verschil
     #    5. tal al deze kwadraten bij elkaar op en deel dit door twee keer het aantal datapunten
 
-    J = 0
-
     # YOUR CODE HERE
+    h = np.array([[0.0, 0.0], [0.0, 0.0]])
+    som_delta = 0
+
+    for index in range(m):
+        h += X[index] * theta
+        sum_h = np.sum(h)
+        delta = (pow(y[index][0] - sum_h, 2))
+        som_delta += delta
+    J = som_delta / (m*2)  # TODO Waarom het aantal x2 ??
 
     return J
-
 
 
 def gradientDescent(X, y, theta, alpha, num_iters):

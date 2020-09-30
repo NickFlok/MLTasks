@@ -2,7 +2,7 @@ import numpy as np
 import sys
 import pickle
 
-from uitwerkingen import *
+from Week1.Nick.uitwerkingen import *
 
 '''
 Onderstaande regels laden het pickle-bestand in waarin de data is opgeslagen.
@@ -22,25 +22,24 @@ Het is de bedoeling om de optimale waarden voor theta te vinden.
 with open('week1_data.pkl','rb') as f:
   data=pickle.load(f) 
 
-m,n = data.shape
+
 
 #Enen toevoegen als eerste kolom van X, zodat we op elke regel een
 #vector hebben waarvan de grootte correspondeert met theta.
-m,n = data.shape
+m, n = data.shape
 X = np.c_[np.ones(m), data[:, [0]]]
 y = data[:, [1]]
 theta = np.zeros( (2, 1) )
-
 # ========================  OPGAVE 1 ========================
-print ("\nOpgave 1: drawGraph")
-print ("Tekenen van de scatter plot van de data...")
-if (len(sys.argv)>1 and sys.argv[1]=='skip'): print ('Slaan we over!')
-else: drawGraph(data)
-input ("Druk op return om verder te gaan...");
+# print ("\nOpgave 1: drawGraph")
+# print ("Tekenen van de scatter plot van de data...")
+# if (len(sys.argv)>1 and sys.argv[1]=='skip'): print ('Slaan we over!')
+# else: drawGraph(data)
+# input ("Druk op return om verder te gaan...");
 
 # ========================  OPGAVE 2 ========================
 print ("\nOpgave 2: computeCost")
-J = computeCost(X, y, theta);
+J = computeCost(X, y, theta, m);
 print ("De gevonden waarde van J is {:f}".format(J))
 print ("Deze waarde zou rond de 32.07 moeten liggen")
 
