@@ -109,12 +109,11 @@ def contourPlot(X, y):
     t1 = np.linspace(-10, 10, 100)
     t2 = np.linspace(-1, 4, 100)
     T1, T2 = np.meshgrid(t1, t2)
-    print(T1, T2)
     new_cost = []
     for t in range(len(T1)):
         add_list = []
         for s in range(len(T1[t])):
-            add_list.append(computeCost(X, y, np.array([[T1[t][s]], [T2[t][s]]])))
+            add_list.append(computeCost(X, y, np.array([[T1[s][t]], [T2[s][t]]])))
         new_cost.append(add_list)
     J_vals = np.array(new_cost)
 
