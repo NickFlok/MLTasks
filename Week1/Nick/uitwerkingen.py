@@ -25,7 +25,7 @@ def drawGraph(data):
     plt.show()
 
 
-def computeCost(X, y, theta, m):
+def computeCost(X, y, theta):
     #OPGAVE 2
     # Deze methode berekent de kosten van de huidige waarden van theta, dat wil zeggen de mate waarin de
     # voorspelling (gegeven de specifieke waarde van theta) correspondeert met de werkelijke waarde (die
@@ -46,6 +46,7 @@ def computeCost(X, y, theta, m):
     #    5. tal al deze kwadraten bij elkaar op en deel dit door twee keer het aantal datapunten
 
     # YOUR CODE HERE
+    m, n = X.shape
     theta = np.transpose(theta)
     som_delta = np.array([0.0])
     for i in range(m):
@@ -112,7 +113,14 @@ def contourPlot(X, y):
 
     J_vals = np.zeros( (len(t2), len(t2)) )
 
-    #YOUR CODE HERE 
+    # YOUR CODE HERE
+    for i in range(len(t1)):
+        for j in range(len(t2)):
+            theta1 = T1[j][i]
+            theta2 = T2[j][i]
+            new_theta = np.array([theta1, theta2])
+            J_vals[i][j] = computeCost(X, y, new_theta)
+
 
     surf = ax.plot_surface(T1, T2, J_vals, rstride=1, cstride=1, cmap=cm.coolwarm, linewidth=0, antialiased=False)
 
