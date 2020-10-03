@@ -43,11 +43,12 @@ def computeCost(X, y, theta):
     #    3. bereken het verschil tussen deze voorspelling en de werkelijke waarde
     #    4. kwadrateer dit verschil
     #    5. tal al deze kwadraten bij elkaar op en deel dit door twee keer het aantal datapunten
-    def h(theta0, theta1, x):
-        return theta0 + theta1 * x
+    #print(theta, X, y)
+    def h(theta0, theta1, x1, x2):
+        return theta0 * x1 + theta1 * x2
 
     def cost_function(m, hf, y, x):
-        return (1 / (2 * m)) * np.sum([(hf(*theta[:, 0], x[i][1]) - y[i]) ** 2 for i in range(y.size)])
+        return (1 / (2 * m)) * np.sum([(hf(*theta[:, 0], *x[i]) - y[i]) ** 2 for i in range(m)])
 
     J = cost_function(y.size, h, y, X)
 
@@ -108,8 +109,14 @@ def contourPlot(X, y):
     t1 = np.linspace(-10, 10, 100)
     t2 = np.linspace(-1, 4, 100)
     T1, T2 = np.meshgrid(t1, t2)
-
-    J_vals = np.zeros((len(t2), len(t2)))
+    print(T1, T2)
+    new_cost = []
+    for t in range(len(T1)):
+        add_list = []
+        for s in range(len(T1[t])):
+            add_list.append(computeCost(X, y, np.array([[T1[t][s]], [T2[t][s]]])))
+        new_cost.append(add_list)
+    J_vals = np.array(new_cost)
 
     # YOUR CODE HERE
 
