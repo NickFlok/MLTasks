@@ -71,7 +71,7 @@ def gradientDescent(X, y, theta, alpha, num_iters):
     #   3. vermenigvuldig dit verschil met de i-de waarde van X
     #   4. update de i-de parameter van theta, namelijk door deze te verminderen met
     #      alpha keer het gemiddelde van de som van de vermenigvuldiging uit 3
-    
+
     def h(theta0, theta1, x0, x1):
         return theta0 * x0 + theta1 * x1
 
@@ -79,7 +79,7 @@ def gradientDescent(X, y, theta, alpha, num_iters):
     for i in range(num_iters):
         for list_theta in theta:
             for feature in range(len(list_theta)):
-                list_theta[feature] = list_theta[feature] - 0.01 * (1/m) * np.sum([(h(*list_theta, *X[i]) - y[i]) * X[i][feature] for i in range(m)])
+                list_theta[feature] = list_theta[feature] - alpha * (1/m) * np.sum([(h(*list_theta, *X[i]) - y[i]) * X[i][feature] for i in range(m)])
 
 
     # YOUR CODE HERE
@@ -99,6 +99,7 @@ def contourPlot(X, y):
     # Je moet hiervoor door de waarden van t1 en t2 itereren, en deze waarden in een ndarray
     # zetten. Deze ndarray kun je vervolgens meesturen aan de functie computeCost. Bedenk of je nog een
     # transformatie moet toepassen of niet. Let op: je moet computeCost zelf *niet* aanpassen.
+
 
     fig = plt.figure()
     ax = fig.gca(projection='3d')
