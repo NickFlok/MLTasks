@@ -3,8 +3,10 @@ import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 from matplotlib import cm
 import matplotlib.mlab as mlab
+
+
 def drawGraph(data):
-    #OPGAVE 1
+    # OPGAVE 1
     # Maak een scatter-plot van de data die als parameter aan deze functie wordt meegegeven. Deze data
     # is een twee-dimensionale matrix met in de eerste kolom de grootte van de steden, in de tweede
     # kolom de winst van de vervoerder. Zet de eerste kolom op de x-as en de tweede kolom op de y-as.
@@ -17,16 +19,13 @@ def drawGraph(data):
     # Om deze constructie in dit specifieke geval te kunnen gebruiken, moet de data-matrix wel eerst
     # roteren (waarom?).
     # Maak gebruik van pytplot.scatter om dit voor elkaar te krijgen.
-
-    #YOUR CODE HERE
-
-    plt.scatter(data[:,0], data[:,1])
+    # YOUR CODE HERE
+    plt.scatter(data[:, 0], data[:, 1])
     plt.show()
 
 
-
 def computeCost(X, y, theta):
-    #OPGAVE 2
+    # OPGAVE 2
     # Deze methode berekent de kosten van de huidige waarden van theta, dat wil zeggen de mate waarin de
     # voorspelling (gegeven de specifieke waarde van theta) correspondeert met de werkelijke waarde (die
     # is gegeven in y).
@@ -48,15 +47,15 @@ def computeCost(X, y, theta):
         return theta0 + theta1 * x
 
     def cost_function(m, hf, y, x):
-        return (1/(2 * m)) * np.sum([(hf(*theta[:,0], x[i][1]) - y[i]) ** 2 for i in range(y.size)])
+        return (1 / (2 * m)) * np.sum([(hf(*theta[:, 0], x[i][1]) - y[i]) ** 2 for i in range(y.size)])
+
     J = cost_function(y.size, h, y, X)
 
     return J
 
 
-
 def gradientDescent(X, y, theta, alpha, num_iters):
-    #OPGAVE 3
+    # OPGAVE 3
     # In deze opgave wordt elke parameter van theta num_iter keer geüpdate om de optimale waarden
     # voor deze parameters te vinden. Per iteratie moet je alle parameters van theta update.
 
@@ -72,8 +71,16 @@ def gradientDescent(X, y, theta, alpha, num_iters):
     #   3. vermenigvuldig dit verschil met de i-de waarde van X
     #   4. update de i-de parameter van theta, namelijk door deze te verminderen met
     #      alpha keer het gemiddelde van de som van de vermenigvuldiging uit 3
+    
+    def h(theta0, theta1, x0, x1):
+        return theta0 * x0 + theta1 * x1
 
-    m,n = X.shape
+    m, n = X.shape
+    for i in range(num_iters):
+        for list_theta in theta:
+            for feature in range(len(list_theta)):
+                list_theta[feature] = list_theta[feature] - 0.01 * (1/m) * np.sum([(h(*list_theta, *X[i]) - y[i]) * X[i][feature] for i in range(m)])
+
 
     # YOUR CODE HERE
 
@@ -82,8 +89,9 @@ def gradientDescent(X, y, theta, alpha, num_iters):
 
     return theta
 
+
 def contourPlot(X, y):
-    #OPGAVE 4
+    # OPGAVE 4
     # Deze methode tekent een contour plot voor verschillende waarden van theta_0 en theta_1.
     # De infrastructuur en algemene opzet is al gegeven; het enige wat je hoeft te doen is 
     # de matrix J_vals vullen met waarden die je berekent aan de hand van de methode computeCost,
@@ -93,16 +101,16 @@ def contourPlot(X, y):
     # transformatie moet toepassen of niet. Let op: je moet computeCost zelf *niet* aanpassen.
 
     fig = plt.figure()
-    ax = fig.gca(projection = '3d')
+    ax = fig.gca(projection='3d')
     jet = plt.get_cmap('jet')
 
     t1 = np.linspace(-10, 10, 100)
     t2 = np.linspace(-1, 4, 100)
     T1, T2 = np.meshgrid(t1, t2)
 
-    J_vals = np.zeros( (len(t2), len(t2)) )
+    J_vals = np.zeros((len(t2), len(t2)))
 
-    #YOUR CODE HERE 
+    # YOUR CODE HERE
 
     surf = ax.plot_surface(T1, T2, J_vals, rstride=1, cstride=1, cmap=cm.coolwarm, linewidth=0, antialiased=False)
 
