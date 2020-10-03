@@ -79,7 +79,7 @@ def gradientDescent(X, y, theta, alpha, num_iters):
 
     # YOUR CODE HERE
     for iteration in range(num_iters):
-        for j in range(2):
+        for j in range(n):
             sum_cost = np.array([0.0])
             for i in range(m):
                 h = np.dot(theta, X[i])
