@@ -4,7 +4,8 @@ from mpl_toolkits.mplot3d import Axes3D
 from matplotlib import cm
 import matplotlib.mlab as mlab
 
-def drawGraph(data_list):
+
+def drawGraph(data):
     #OPGAVE 1
     # Maak een scatter-plot van de data die als parameter aan deze functie wordt meegegeven. Deze data
     # is een twee-dimensionale matrix met in de eerste kolom de grootte van de steden, in de tweede
@@ -18,13 +19,8 @@ def drawGraph(data_list):
     # Om deze constructie in dit specifieke geval te kunnen gebruiken, moet de data-matrix wel eerst
     # roteren (waarom?).
     # Maak gebruik van pytplot.scatter om dit voor elkaar te krijgen.
-
-    #YOUR CODE HERE
-    x = []
-    y = []
-    for data in data_list:
-        x.append(data[0])
-        y.append(data[1])
+    data = np.transpose(data)
+    x, y = data
     plt.scatter(x, y)
     plt.show()
 
@@ -50,17 +46,15 @@ def computeCost(X, y, theta, m):
     #    5. tal al deze kwadraten bij elkaar op en deel dit door twee keer het aantal datapunten
 
     # YOUR CODE HERE
-    h = np.array([[0.0, 0.0], [0.0, 0.0]])
-    som_delta = 0
-
-    for index in range(m):
-        h += X[index] * theta
-        sum_h = np.sum(h)
-        delta = (pow(y[index][0] - sum_h, 2))
+    theta = np.transpose(theta)
+    som_delta = np.array([0.0])
+    for i in range(m):
+        h = np.dot(theta, X[i])
+        delta = pow((h-y[i]), 2)
         som_delta += delta
-    J = som_delta / (m*2)  # TODO Waarom het aantal x2 ??
+    J = som_delta / (m*2)
 
-    return J
+    return J[0]
 
 
 def gradientDescent(X, y, theta, alpha, num_iters):
@@ -81,9 +75,17 @@ def gradientDescent(X, y, theta, alpha, num_iters):
     #   4. update de i-de parameter van theta, namelijk door deze te verminderen met
     #      alpha keer het gemiddelde van de som van de vermenigvuldiging uit 3
 
-    m,n = X.shape
+    m, n = X.shape
 
     # YOUR CODE HERE
+    for iteration in range(num_iters):
+        for j in range(n):
+            sum_cost = np.array([0.0])
+            for i in range(m):
+                h = np.dot(theta, X[i])
+                delta = h - y[i]
+                sum_cost += np.dot(delta, np.array(X[i][j]))
+            theta[0][j] -= alpha * (sum_cost/m)
 
     # aan het eind van deze loop retourneren we de nieuwe waarde van theta
     # (wat is de dimensionaliteit van theta op dit moment?).
