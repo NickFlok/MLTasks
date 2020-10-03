@@ -77,7 +77,7 @@ def gradientDescent(X, y, theta, alpha, num_iters):
         return theta0 * x0 + theta1 * x1
 
     m, n = X.shape
-    for i in range(num_iters):
+    for p in range(num_iters):
         for list_theta in theta:
             for feature in range(len(list_theta)):
                 list_theta[feature] = list_theta[feature] - alpha * (1/m) * np.sum([(h(*list_theta, *X[i]) - y[i]) * X[i][feature] for i in range(m)])
