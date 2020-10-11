@@ -19,7 +19,6 @@ def drawGraph(data):
     # Om deze constructie in dit specifieke geval te kunnen gebruiken, moet de data-matrix wel eerst
     # roteren (waarom?).
     # Maak gebruik van pytplot.scatter om dit voor elkaar te krijgen.
-    data = data
     data = np.transpose(data)
     x, y = data
     plt.scatter(x, y)
