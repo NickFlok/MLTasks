@@ -25,7 +25,7 @@ def sigmoid(z):
         g = 1 / (1 + np.exp(-z))
     else:
         m, n = z.shape
-        g = np.zeros((m, n), dtype=np.float64)
+        g = np.zeros((m, n))
         for x in range(m):
             for y in range(n):
                 g[x, y] = 1 / (1 + np.exp(-z[x, y]))

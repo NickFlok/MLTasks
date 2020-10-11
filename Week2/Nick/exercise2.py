@@ -79,8 +79,6 @@ num_labels = 10;          # 10 labels, from 1 to 10
 print ("")
 print ("Sigmoid-functie met een relatief groot negatief getal zou bijna 0 moeten zijn")
 print ("Sigmoid van -10 = {}".format(sigmoid(-10)))
-test = sigmoid(10)
-print(type(test))
 
 print ("Sigmoid-functie van 0 zou 0,5 moeten zijn.")
 print ("Sigmoid van 0 = {}".format(sigmoid(0)))
