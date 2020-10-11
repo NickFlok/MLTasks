@@ -21,7 +21,15 @@ def sigmoid(z):
     # vector is.
     # Maak gebruik van de methode exp() in NumPy.
 
-    pass
+    if type(z) is int:
+        g = 1 / (1 + np.exp(-z))
+    else:
+        m, n = z.shape
+        g = np.zeros((m, n), dtype=np.float64)
+        for x in range(m):
+            for y in range(n):
+                g[x, y] = 1 / (1 + np.exp(-z[x, y]))
+    return g
 
 
 # ==== OPGAVE 2b ====

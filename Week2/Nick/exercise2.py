@@ -26,7 +26,7 @@ def displayData(X):
         plt.subplot(5, 5, idx+1)
         x = X[idx,:].reshape(20,20)
         plt.tick_params(which='both',left=False, bottom=False, top=False, labelleft=False, labelbottom=False)
-        plt.imshow(x, cmap='gray', interpolation='nearest');
+        plt.imshow(x, cmap='gray', interpolation='nearest')
 
     plt.show()
 
@@ -62,23 +62,25 @@ num_labels = 10;          # 10 labels, from 1 to 10
 
 
 # ========================  OPGAVE 1 ======================== 
-rnd = randint(0, X.shape[0])
-print ("Tekenen van data op regel {}".format(rnd))
-if (len(sys.argv)>1 and sys.argv[1]=='skip') :
-    print ("Slaan we over")
-else:
-    hyp = y[rnd]
-    if (hyp==10): hyp=0
-    print ("Dit zou een {} moeten zijn.".format(hyp))
-    plotNumber(X[rnd,:])
-
-input ("Druk op Return om verder te gaan...") 
+# rnd = randint(0, X.shape[0])
+# print ("Tekenen van data op regel {}".format(rnd))
+# if (len(sys.argv)>1 and sys.argv[1]=='skip') :
+#     print ("Slaan we over")
+# else:
+#     hyp = y[rnd]
+#     if (hyp==10): hyp=0
+#     print ("Dit zou een {} moeten zijn.".format(hyp))
+#     plotNumber(X[rnd,:])
+#
+# input ("Druk op Return om verder te gaan...")
 
 
 # ========================  OPGAVE 2a ======================== 
 print ("")
 print ("Sigmoid-functie met een relatief groot negatief getal zou bijna 0 moeten zijn")
 print ("Sigmoid van -10 = {}".format(sigmoid(-10)))
+test = sigmoid(10)
+print(type(test))
 
 print ("Sigmoid-functie van 0 zou 0,5 moeten zijn.")
 print ("Sigmoid van 0 = {}".format(sigmoid(0)))
