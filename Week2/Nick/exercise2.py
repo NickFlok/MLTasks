@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 import sys
 import pickle
 
-from uitwerkingen import *
+from Week2.Nick.uitwerkingen import *
 
 # Helperfuncties die nodig zijn om de boel te laten werken
 # Hier hoef je niets aan te veranderen, maar bestudeer de 
