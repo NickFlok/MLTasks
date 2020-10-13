@@ -9,8 +9,9 @@ def plotNumber(nrVector):
     # laatste index het langzaamst; als je dat niet doet, wordt het plaatje 
     # gespiegeld en geroteerd. Zie de documentatie op 
     # https://docs.scipy.org/doc/numpy/reference/generated/numpy.reshape.html
-
-    pass
+    data = np.reshape(nrVector, (20, 20), order='F')
+    plt.matshow(data)
+    plt.show()
 
 # ==== OPGAVE 2a ====
 def sigmoid(z):
