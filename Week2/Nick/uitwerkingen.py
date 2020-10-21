@@ -42,7 +42,10 @@ def get_y_matrix(y, m):
     # van de matrix 10 (0-9), maar de methode moet werken voor elke waarde van 
     # y en m
 
-    pass 
+    data = np.ones(m)
+    row = np.array(np.arange(m))
+    column = np.reshape(y, -1)
+    return csr_matrix((data, (row, column-1)), shape=(m, np.amax(y))).toarray()
 
 
 # ==== OPGAVE 2c ==== 
@@ -70,7 +73,13 @@ def predictNumber(Theta1, Theta2, X):
     # Voeg enen toe aan het begin van elke stap en reshape de uiteindelijke
     # vector zodat deze dezelfde dimensionaliteit heeft als y in de exercise.
 
-    pass
+    a1 = np.c_[np.ones(X.shape[0]), X].transpose()
+    z2 = np.dot(Theta1, a1)
+    a2 = sigmoid(z2)
+    a2 = np.vstack((np.ones(a2.shape[1]), a2))
+    z3 = np.dot(Theta2, a2)
+    a3 = sigmoid(z3).transpose()
+    return a3
 
 
 
@@ -83,10 +92,12 @@ def computeCost(Theta1, Theta2, X, y):
     # geretourneerd.
     # Let op: de y die hier binnenkomt is de m×1-vector met waarden van 1...10. 
     # Maak gebruik van de methode get_y_matrix() die je in opgave 2a hebt gemaakt
-    # om deze om te zetten naar een matrix. 
+    # om deze om te zetten naar een matrix.
 
-    pass
-
+    m, n = X.shape
+    y_matrix = get_y_matrix(y, m)
+    predict = predictNumber(Theta1, Theta2, X)
+    return np.sum((y_matrix + predict)) / m
 
 
 # ==== OPGAVE 3a ====
@@ -94,23 +105,39 @@ def sigmoidGradient(z):
     # Retourneer hier de waarde van de afgeleide van de sigmoïdefunctie.
     # Zie de opgave voor de exacte formule. Zorg ervoor dat deze werkt met
     # scalaire waarden en met vectoren.
-
-    pass
+    amount = sigmoid(z)
+    g = amount * (1 - amount)
+    return g
 
 # ==== OPGAVE 3b ====
 def nnCheckGradients(Theta1, Theta2, X, y): 
     # Retourneer de gradiënten van Theta1 en Theta2, gegeven de waarden van X en van y
     # Zie het stappenplan in de opgaven voor een mogelijke uitwerking.
 
-    Delta2 = np.zeros(Theta1.shape)
-    Delta3 = np.zeros(Theta2.shape)
-    m = 1 #voorbeeldwaarde; dit moet je natuurlijk aanpassen naar de echte waarde van m
+    m, n = X.shape
+    y_matrix = get_y_matrix(y, m)
 
-    for i in range(m): 
-        #YOUR CODE HERE
-        pass
+    a1 = np.c_[np.ones(X.shape[0]), X].transpose()
+    z2 = np.dot(Theta1, a1)
+    a2 = sigmoidGradient(z2)
+    a2 = np.vstack((np.ones(a2.shape[1]), a2))
+    z3 = np.dot(Theta2, a2)
+    a3 = sigmoidGradient(z3).transpose()
 
-    Delta2_grad = Delta2 / m
-    Delta3_grad = Delta3 / m
+
+    delta3 = a3 - y_matrix
+    delta2 = np.empty((5000, 26))
+    a2_transposed = np.transpose(a2)
+    m, n = delta3.shape
+    for i in range(m):
+        dot_product = np.dot(np.transpose(Theta2), delta3[i])
+        delta2[i] = dot_product * a2_transposed[i]
+
+
+    # Delta1 = np.zeros(Theta1.shape)
+    # Delta2 = np.zeros(Theta2.shape)
+
+    Delta1_grad = delta2 / m
+    Delta2_grad = delta3 / m
     
-    return Delta2_grad, Delta3_grad
+    return Delta1_grad, Delta2_grad
