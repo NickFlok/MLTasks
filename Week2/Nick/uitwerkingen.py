@@ -132,6 +132,7 @@ def nnCheckGradients(Theta1, Theta2, X, y):
     a2_transposed = np.transpose(a2)
     a1_transposed = np.transpose(a1)
 
+    # Delta2
     for i in range(m):
         dot_product = np.dot(np.transpose(Theta2), delta3[i])
         delta2[i] = dot_product * sigmoidGradient(a2_transposed[i])
@@ -141,7 +142,7 @@ def nnCheckGradients(Theta1, Theta2, X, y):
     for i in range(10):
         Delta2[i] = total2
 
-
+    # Delta1
     delta1 = np.empty((5000, 401))
 
     for i in range(m):
