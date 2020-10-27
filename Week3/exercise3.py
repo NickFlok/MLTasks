@@ -40,24 +40,24 @@ print ("Grootte van de labels: {}".format(len(labels)))
 
 
 # ===============  OPGAVE 1b ======================
-X = np.array( ([1,2,3,4],[2,2,4,4],[4,3,2,1]) )
-r = X/4
-print ("Aanroepen van de methode scaleData met de matrix:")
-print (X)
-print (scaleData(X))
-print ("Het resultaat zou gelijk moeten zijn aan:")
-print (r)
-
+# X = np.array( ([1,2,3,4],[2,2,4,4],[4,3,2,1]) )
+# r = X/4
+# print ("Aanroepen van de methode scaleData met de matrix:")
+# print (X)
+# print (scaleData(X))
+# print ("Het resultaat zou gelijk moeten zijn aan:")
+# print (r)
+#
 train_images = train_images.reshape((60000, 28 * 28))
 test_images = test_images.reshape((10000, 28 * 28))
 train_images = scaleData(train_images)
 test_images = scaleData(test_images)
 
-# ===============  OPGAVE 1c ======================
+# # ===============  OPGAVE 1c ======================
 print ("")
 print ("Aanmaken van het model.")
 model = buildModel()
-print ("Trainen van het model...") 
+print ("Trainen van het model...")
 model.fit(train_images, train_labels, epochs=6)
 print ("Training afgerond.")
 

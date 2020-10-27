@@ -71,7 +71,32 @@ def confEls(conf, labels):
     # Check de documentatie van numpy diagonal om de eerste waarde te bepalen.
  
     # YOUR CODE HERE
-    pass
+    n = len(labels)
+    tp = np.diagonal(conf)
+
+    fp = np.empty(n)
+    for i in range(n):
+        sum = 0
+        for l in range(n):
+            sum += conf[l][i]
+        fp[i] = sum - tp[i]
+
+    fn = np.empty(n)
+    for i in range(n):
+        sum = 0
+        for l in range(n):
+            sum += conf[i][l]
+        fn[i] = sum - tp[i]
+
+    tn = np.empty(n)
+    for i in range(n):
+        sum = 0
+        for l in range(n):
+            for k in range(n):
+                sum += conf[l][k]
+        tn[i] = sum - tp[i] - fp[i] - fn[i]
+
+    return list(zip(labels, tp, fp, fn, tn))
 
 # OPGAVE 2c
 def confData(metrics):
@@ -81,14 +106,24 @@ def confData(metrics):
     # vorm van een dictionary (de scaffold hiervan is gegeven).
 
     # VERVANG ONDERSTAANDE REGELS MET JE EIGEN CODE
-    
-    tp = 1
-    fp = 1
-    fn = 1
-    tn = 1
+    tp = 0
+    fp = 0
+    fn = 0
+    tn = 0
+
+    for i in range(10):
+        tp += metrics[i][1]
+        fp += metrics[i][2]
+        fn += metrics[i][3]
+        tn += metrics[i][4]
 
     # BEREKEN HIERONDER DE JUISTE METRIEKEN EN RETOURNEER DIE 
     # ALS EEN DICTIONARY
 
-    rv = {'tpr':0, 'ppv':0, 'tnr':0, 'fpr':0 }
+    tpr = tp / (tp + fn)
+    ppv = tp / (tp + fp)
+    tnr = tn / (tn + fp)
+    fpr = fp / (fp + tn)
+
+    rv = {'tpr': tpr, 'ppv': ppv, 'tnr': tnr, 'fpr': fpr}
     return rv
