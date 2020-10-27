@@ -54,7 +54,8 @@ def confMatrix(labels, pred):
     # waarden (labels). Check de documentatie van tf.math.confusion_matrix
 
     # YOUR CODE HERE
-    pass
+    return tf.math.confusion_matrix(labels, pred)
+
 
 
 # OPGAVE 2b
