@@ -16,7 +16,7 @@ from Week2.Nick.uitwerkingen import *
 def randInitializeWeights(in_conn, out_conn):
     W = np.zeros((out_conn, 1 + out_conn))
     epsilon_init = 0.12
-    #W = rand(L_out, 1 + L_in) * 2 * epsilon_init - epsilon_init;
+    # W = rand(L_out, 1 + L_in) * 2 * epsilon_init - epsilon_init;
     W = np.random.rand(out_conn, 1+in_conn) * 2 * epsilon_init - epsilon_init
     return W
 

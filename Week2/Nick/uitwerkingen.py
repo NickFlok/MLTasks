@@ -142,6 +142,7 @@ def nnCheckGradients(Theta1, Theta2, X, y):
     for i in range(10):
         Delta2[i] = total2
 
+
     # Delta1
     delta1 = np.empty((5000, 401))
 
