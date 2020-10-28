@@ -21,15 +21,15 @@ def sigmoid(z):
     # vector is.
     # Maak gebruik van de methode exp() in NumPy.
 
-    # if type(z) is int:
-    #     g = 1 / (1 + np.exp(-z))
-    # else:
-    #     m, n = z.shape
-    #     g = np.zeros((m, n))
-    #     for x in range(m):
-    #         for y in range(n):
-    #             g[x, y] = 1 / (1 + np.exp(-z[x, y]))
-    return 1 / (1 + np.exp(-z))
+    if type(z) is int:
+        g = 1 / (1 + np.exp(-z))
+    else:
+        m, n = z.shape
+        g = np.zeros((m, n))
+        for x in range(m):
+            for y in range(n):
+                g[x, y] = 1 / (1 + np.exp(-z[x, y]))
+    return g
 
 
 # ==== OPGAVE 2b ====
@@ -118,12 +118,6 @@ def nnCheckGradients(Theta1, Theta2, X, y):
     # Retourneer de gradiënten van Theta1 en Theta2, gegeven de waarden van X en van y
     # Zie het stappenplan in de opgaven voor een mogelijke uitwerking.
 
-    Delta1 = np.zeros(Theta1.shape)
-    Delta2 = np.zeros(Theta2.shape)
-
-    m, n = X.shape
-    y_matrix = get_y_matrix(y, m)
-
     a1 = np.c_[np.ones(X.shape[0]), X].transpose()
     z2 = np.dot(Theta1, a1)
     a2 = sigmoid(z2)
@@ -131,36 +125,16 @@ def nnCheckGradients(Theta1, Theta2, X, y):
     z3 = np.dot(Theta2, a2)
     a3 = sigmoid(z3).transpose()
 
-    delta3 = a3 - y_matrix
-    delta2 = np.empty((5000, 26))
-    a2_transposed = np.transpose(a2)
-    a1_transposed = np.transpose(a1)
+    m, n = X.shape
+    y_matrix = get_y_matrix(y, m)
 
-    # Delta2
-    for i in range(m):
-        dot_product = np.dot(np.transpose(Theta2), delta3[i])
-        delta2[i] = dot_product * sigmoidGradient(a2_transposed[i])
+    delta2 = a3 - y_matrix
+    delta1 = np.multiply(np.dot(delta2, Theta2).transpose()[1:], sigmoidGradient(z2))
 
-    total2 = np.sum((a2_transposed * delta2), axis=0)
+    Delta1 = np.dot(a1, delta1.transpose())
+    Delta2 = np.dot(a2, delta2)
 
-    for i in range(10):
-        Delta2[i] = total2
-
-
-    # Delta1
-    delta1 = np.empty((5000, 401))
-
-    for i in range(m):
-        dot_product = np.dot(np.transpose(Theta1), delta2[i][1:])
-        delta1[i] = dot_product * sigmoidGradient(a1_transposed[i])
-
-    total1 = np.sum((a1_transposed * delta1), axis=0)
-
-    for i in range(25):
-        Delta1[i] = total1
-
-
-    Delta1_grad = Delta1 / m
-    Delta2_grad = Delta2 / m
+    Delta1_grad = Delta1.transpose() / m
+    Delta2_grad = Delta2.transpose() / m
     
     return Delta1_grad, Delta2_grad
