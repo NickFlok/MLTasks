@@ -30,24 +30,24 @@ print ("Grootte van de labels: {}".format(len(labels)))
 
 # ===============  OPGAVE 1 ======================
 # ===============  OPGAVE 1a ======================
-# print ("Plotten van een willekeurig plaatje uit de trainings-dataset")
-# if (len(sys.argv)>1 and sys.argv[1]=='skip') :
-#     print ("Slaan we over")
-# else:
-#     rnd = randint(0, train_images.shape[0])
-#     hyp = labels[train_labels[rnd]]
-#     plotImage(train_images[rnd], hyp)
+print ("Plotten van een willekeurig plaatje uit de trainings-dataset")
+if (len(sys.argv)>1 and sys.argv[1]=='skip') :
+    print ("Slaan we over")
+else:
+    rnd = randint(0, train_images.shape[0])
+    hyp = labels[train_labels[rnd]]
+    plotImage(train_images[rnd], hyp)
 
 
 # ===============  OPGAVE 1b ======================
-# X = np.array( ([1,2,3,4],[2,2,4,4],[4,3,2,1]) )
-# r = X/4
-# print ("Aanroepen van de methode scaleData met de matrix:")
-# print (X)
-# print (scaleData(X))
-# print ("Het resultaat zou gelijk moeten zijn aan:")
-# print (r)
-#
+X = np.array( ([1,2,3,4],[2,2,4,4],[4,3,2,1]) )
+r = X/4
+print ("Aanroepen van de methode scaleData met de matrix:")
+print (X)
+print (scaleData(X))
+print ("Het resultaat zou gelijk moeten zijn aan:")
+print (r)
+
 train_images = train_images.reshape((60000, 28 * 28))
 test_images = test_images.reshape((10000, 28 * 28))
 train_images = scaleData(train_images)
@@ -65,6 +65,7 @@ print ("Training afgerond.")
 # ===============  OPGAVE 2 ======================
 print ("")
 print ("Bepalen van de confusion matrix van het getrainde netwerk.")
+
 pred = np.argmax(model.predict(test_images), axis=1)
 cm = confMatrix(test_labels, pred)
 

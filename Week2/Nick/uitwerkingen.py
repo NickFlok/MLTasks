@@ -97,7 +97,11 @@ def computeCost(Theta1, Theta2, X, y):
     m, n = X.shape
     y_matrix = get_y_matrix(y, m)
     predict = predictNumber(Theta1, Theta2, X)
-    return np.sum((y_matrix + predict)) / m
+    log_predict = np.log(predict)
+
+    cost = np.multiply(-y_matrix, log_predict) - np.multiply(1 - y_matrix, np.log(1 - predict))
+
+    return np.sum(cost) / m
 
 
 # ==== OPGAVE 3a ====
